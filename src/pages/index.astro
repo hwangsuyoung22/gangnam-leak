@@ -1,25 +1,694 @@
+---
+const phone = "1660-4350";
+const tel = "16604350";
+
 const areas = [
-  "강남구",
-  "신사동",
-  "논현1동",
-  "논현2동",
-  "압구정동",
-  "청담동",
-  "삼성1동",
-  "삼성2동",
-  "대치1동",
-  "대치2동",
-  "대치4동",
-  "역삼1동",
-  "역삼2동",
-  "도곡1동",
-  "도곡2동",
-  "개포1동",
-  "개포2동",
-  "개포3동",
-  "개포4동",
-  "일원본동",
-  "일원1동",
-  "수서동",
-  "세곡동"
+  "강남구", "신사동", "논현1동", "논현2동", "압구정동", "청담동",
+  "삼성1동", "삼성2동", "대치1동", "대치2동", "대치4동",
+  "역삼1동", "역삼2동", "도곡1동", "도곡2동",
+  "개포1동", "개포2동", "개포3동", "개포4동",
+  "일원본동", "일원1동", "수서동", "세곡동"
 ];
+
+const services = [
+  "누수탐지", "하수구막힘", "싱크대막힘", "변기막힘",
+  "배수구막힘", "배관공사", "욕실누수", "천장누수"
+];
+
+const title = "강남구 누수탐지 배관설비 전문 | 배관솔루션";
+const description = "강남구 누수탐지, 배관설비, 하수구막힘 전문. 친절 상담 1660-4350. 정확한 진단, 필요한 공사, 1년 A/S 보장.";
+---
+
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href="https://gangnam-leak.netlify.app/" />
+  </head>
+
+  <body>
+    <div class="top-bar">강남구 누수탐지 · 배관설비 24시간 친절 상담</div>
+
+    <header class="header">
+      <div class="header-inner">
+        <a href="/" class="logo">배관솔루션</a>
+        <a class="phone-btn" href={`tel:${tel}`}>대표전화 {phone}</a>
+        <nav>
+          <a href="#service">주요서비스</a>
+          <a href="#works">공사실적</a>
+          <a href="#area">강남구 지역</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-photo">
+          <div>
+            <strong>현장 이미지</strong>
+            <span>사진 준비 후 교체</span>
+          </div>
+        </div>
+
+        <div class="hero-copy">
+          <p>365일 친절 상담</p>
+          <h1>강남구 누수탐지<br />배관설비 전문</h1>
+          <a href={`tel:${tel}`} class="hero-call">☎ {phone}</a>
+          <span>정확한 진단 · 필요한 공사 · 1년 A/S 보장</span>
+        </div>
+      </section>
+
+      <section class="as-section">
+        <h2>배관솔루션은 <strong>1년 A/S</strong>로 안심을 보장합니다.</h2>
+        <p>강남구 아파트, 빌라, 상가, 사무실 현장 상황에 맞춰 필요한 작업만 안내합니다.</p>
+      </section>
+
+      <section id="service" class="service-cards">
+        <article>
+          <div class="thumb">01</div>
+          <h3>누수탐지</h3>
+          <p>수도, 온수, 난방배관 누수 원인을 장비와 현장 확인을 통해 안내합니다.</p>
+        </article>
+        <article>
+          <div class="thumb">02</div>
+          <h3>배관설비</h3>
+          <p>노후 배관, 부분 보수, 배관 교체 등 필요한 범위의 작업을 진행합니다.</p>
+        </article>
+        <article>
+          <div class="thumb">03</div>
+          <h3>하수구 막힘</h3>
+          <p>싱크대, 욕실, 베란다, 변기 막힘과 역류 증상을 현장 기준으로 확인합니다.</p>
+        </article>
+      </section>
+
+      <section id="works" class="works">
+        <h2>강남구 공사실적</h2>
+        <p>강남구 주요 지역별 누수탐지와 배관설비 상담이 가능합니다.</p>
+
+        <div class="work-cards">
+          {areas.slice(1, 9).map((area) => (
+            <a href={`/${area}-누수탐지`}>
+              <div>{area}</div>
+              <h3>{area} 누수탐지 현장</h3>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section id="area" class="area-section">
+        <h2>강남구 지역별 바로가기</h2>
+        <div class="area-links">
+          {areas.map((area) => (
+            <a href={`/${area}-누수탐지`}>{area} 누수탐지</a>
+          ))}
+        </div>
+      </section>
+
+      <section class="service-links">
+        <h2>주요 서비스 바로가기</h2>
+        <div class="area-links">
+          {services.map((service) => (
+            <a href={`/강남구-${service}`}>강남구 {service}</a>
+          ))}
+        </div>
+      </section>
+
+      <section id="faq" class="faq-section">
+        <div class="faq-photo">
+          <strong>상담 가능</strong>
+          <span>강남구 전 지역</span>
+        </div>
+
+        <div class="faq-content">
+          <h2>자주 묻는 질문</h2>
+
+          <details>
+            <summary>강남구 누수탐지 비용은 얼마인가요?</summary>
+            <p>현장 구조와 증상에 따라 달라질 수 있어 전화 상담 후 안내드립니다.</p>
+          </details>
+
+          <details>
+            <summary>아파트 아래층 천장 누수도 확인 가능한가요?</summary>
+            <p>가능합니다. 윗집 배관, 욕실, 난방, 수도 계통 등을 현장 기준으로 확인합니다.</p>
+          </details>
+
+          <details>
+            <summary>하수구 막힘도 당일 상담 가능한가요?</summary>
+            <p>현장 일정에 따라 당일 상담과 방문 안내가 가능합니다.</p>
+          </details>
+
+          <details>
+            <summary>작업 후 A/S도 가능한가요?</summary>
+            <p>작업 내용과 현장 조건에 따라 A/S 기준을 안내드립니다.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="bottom-services">
+        <div>
+          <strong>01</strong>
+          <h3>누수탐지</h3>
+          <p>수도, 온수, 난방배관 누수 확인</p>
+        </div>
+        <div>
+          <strong>02</strong>
+          <h3>하수구 막힘</h3>
+          <p>싱크대, 욕실, 베란다 배수 문제</p>
+        </div>
+        <div>
+          <strong>03</strong>
+          <h3>변기 막힘</h3>
+          <p>변기 막힘과 역류 증상 확인</p>
+        </div>
+        <div>
+          <strong>04</strong>
+          <h3>배관공사</h3>
+          <p>노후 배관 교체와 부분 보수</p>
+        </div>
+      </section>
+
+      <section class="cta-banner">
+        <p>강남구 누수탐지 · 배관설비 상담</p>
+        <h2>친절 상담 전화</h2>
+        <a href={`tel:${tel}`}>☎ {phone}</a>
+        <span>정확한 진단 · 필요한 공사 · 1년 A/S 보장</span>
+      </section>
+    </main>
+
+    <footer>
+      <h2>배관솔루션</h2>
+      <p>강남구 누수탐지 · 배관설비 · 하수구막힘 전문</p>
+      <a href={`tel:${tel}`}>친절 상담 {phone}</a>
+      <small>© 2026 배관솔루션 All Rights Reserved.</small>
+    </footer>
+  </body>
+</html>
+
+<style>
+  * { box-sizing: border-box; }
+
+  html {
+    word-break: keep-all;
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    font-family: Arial, "Noto Sans KR", sans-serif;
+    color: #222;
+    background: #fff;
+    overflow-x: hidden;
+  }
+
+  a { text-decoration: none; }
+
+  .top-bar {
+    background: #063f9e;
+    color: #fff;
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  .header {
+    background: #fff;
+  }
+
+  .header-inner {
+    max-width: 1180px;
+    min-height: 110px;
+    margin: 0 auto;
+    padding: 22px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .logo {
+    color: #0b4eb3;
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 950;
+    white-space: nowrap;
+  }
+
+  .phone-btn {
+    background: #2867c9;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  nav {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  nav a {
+    color: #111;
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 720px;
+  }
+
+  .hero-photo {
+    background:
+      linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.25)),
+      linear-gradient(135deg, #d8e2ef, #f4f7fb);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-photo div,
+  .faq-photo {
+    border: 2px dashed rgba(0,0,0,.2);
+    border-radius: 26px;
+    padding: 34px;
+    text-align: center;
+  }
+
+  .hero-photo strong,
+  .faq-photo strong {
+    display: block;
+    font-size: 34px;
+    margin-bottom: 8px;
+    color: #073f9f;
+  }
+
+  .hero-copy {
+    background: #073f9f;
+    color: white;
+    padding: 60px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+    text-align: center;
+  }
+
+  .hero-copy p {
+    color: #ffd400;
+    font-size: clamp(18px, 2vw, 24px);
+    font-weight: 900;
+    margin: 0;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(44px, 5vw, 76px);
+    line-height: 1.12;
+    margin: 0;
+    font-weight: 950;
+    letter-spacing: -1.5px;
+  }
+
+  .hero-call {
+    display: inline-flex;
+    justify-content: center;
+    max-width: 100%;
+    background: white;
+    color: #111;
+    padding: 18px 56px;
+    border-radius: 999px;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 950;
+    box-shadow: 0 8px 0 rgba(0,0,0,.16);
+    white-space: nowrap;
+  }
+
+  .hero-copy span {
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 700;
+  }
+
+  .as-section {
+    text-align: center;
+    padding: 80px 20px 42px;
+  }
+
+  .as-section h2 {
+    margin: 0 0 18px;
+    font-size: clamp(28px, 3vw, 42px);
+  }
+
+  .as-section strong { color: #2165c8; }
+
+  .as-section p {
+    max-width: 760px;
+    margin: 0 auto;
+    line-height: 1.8;
+    font-size: 17px;
+  }
+
+  .service-cards {
+    max-width: 1100px;
+    margin: 0 auto 100px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .service-cards article {
+    border: 1px solid #e5e5e5;
+    background: white;
+    text-align: center;
+  }
+
+  .thumb {
+    height: 210px;
+    background: linear-gradient(135deg, #0d4fb3, #2e7ff0);
+    color: #ffd400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 54px;
+    font-weight: 950;
+  }
+
+  .service-cards h3 {
+    color: #1f63c6;
+    font-size: 24px;
+    margin: 28px 20px 12px;
+  }
+
+  .service-cards p {
+    margin: 0;
+    padding: 0 28px 34px;
+    line-height: 1.75;
+  }
+
+  .works,
+  .area-section,
+  .service-links {
+    background: #f7f7f7;
+    text-align: center;
+    padding: 85px 20px;
+  }
+
+  .service-links {
+    background: #fff;
+  }
+
+  .works h2,
+  .area-section h2,
+  .service-links h2 {
+    font-size: clamp(32px, 4vw, 44px);
+    margin: 0 0 20px;
+  }
+
+  .work-cards {
+    max-width: 1100px;
+    margin: 40px auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+  }
+
+  .work-cards a {
+    background: white;
+    border: 1px solid #ddd;
+    color: #111;
+    overflow: hidden;
+  }
+
+  .work-cards div {
+    height: 180px;
+    background: linear-gradient(135deg,#0d4fb3,#347ef0);
+    color: white;
+    font-size: 32px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .work-cards h3 {
+    font-size: 18px;
+    padding: 18px;
+    margin: 0;
+  }
+
+  .area-links {
+    max-width: 1050px;
+    margin: 35px auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .area-links a {
+    background: white;
+    border: 1px solid #ddd;
+    color: #111;
+    padding: 17px 12px;
+    font-weight: 900;
+    font-size: 16px;
+  }
+
+  .service-links .area-links a {
+    background: #f7f7f7;
+  }
+
+  .faq-section {
+    max-width: 1120px;
+    margin: 90px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1.12fr;
+    gap: 70px;
+    align-items: center;
+  }
+
+  .faq-photo {
+    min-height: 420px;
+    background: linear-gradient(135deg, #e4eaf3, #f8f8f8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 80px;
+  }
+
+  .faq-content h2 {
+    font-size: clamp(30px, 3vw, 42px);
+    margin: 0 0 24px;
+  }
+
+  details {
+    background: #2867c9;
+    color: #fff;
+    margin-top: 15px;
+    border-radius: 999px;
+    padding: 20px 28px;
+  }
+
+  summary {
+    cursor: pointer;
+    font-weight: 900;
+    line-height: 1.45;
+  }
+
+  details p {
+    margin: 16px 0 0;
+    line-height: 1.7;
+  }
+
+  .bottom-services {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: #333;
+  }
+
+  .bottom-services div {
+    min-height: 330px;
+    padding: 70px 34px;
+    text-align: center;
+    color: #fff;
+    background: linear-gradient(rgba(0,0,0,.58), rgba(0,0,0,.58));
+    border-right: 1px solid rgba(255,255,255,.18);
+  }
+
+  .bottom-services strong,
+  .bottom-services h3 {
+    color: #ffd400;
+  }
+
+  .bottom-services strong {
+    font-size: 48px;
+    font-weight: 950;
+  }
+
+  .bottom-services h3 {
+    font-size: 25px;
+    margin: 26px 0 18px;
+  }
+
+  .bottom-services p {
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  .cta-banner {
+    background: #073f9f;
+    color: white;
+    text-align: center;
+    padding: 80px 20px;
+  }
+
+  .cta-banner p {
+    color: #ffd400;
+    font-size: 22px;
+    font-weight: 900;
+    margin: 0 0 14px;
+  }
+
+  .cta-banner h2 {
+    font-size: clamp(34px, 4vw, 48px);
+    margin: 0 0 24px;
+    font-weight: 950;
+  }
+
+  .cta-banner a {
+    display: inline-flex;
+    justify-content: center;
+    background: white;
+    color: #111;
+    border-radius: 999px;
+    padding: 18px 58px;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 950;
+    box-shadow: 0 8px 0 rgba(0,0,0,.18);
+    white-space: nowrap;
+  }
+
+  .cta-banner span {
+    display: block;
+    margin-top: 24px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  footer {
+    background: #2867c9;
+    color: white;
+    text-align: center;
+    padding: 70px 20px 36px;
+  }
+
+  footer h2 {
+    font-size: 34px;
+    margin: 0 0 24px;
+  }
+
+  footer a {
+    color: #ffd400;
+    font-size: 24px;
+    font-weight: 950;
+  }
+
+  footer small {
+    display: block;
+    margin-top: 42px;
+    opacity: .85;
+  }
+
+  @media (max-width: 980px) {
+    .header-inner {
+      flex-direction: column;
+      min-height: auto;
+    }
+
+    .hero,
+    .service-cards,
+    .faq-section,
+    .bottom-services {
+      grid-template-columns: 1fr;
+    }
+
+    .hero {
+      min-height: auto;
+    }
+
+    .hero-photo {
+      min-height: 300px;
+    }
+
+    .hero-copy {
+      min-height: 430px;
+    }
+
+    .work-cards,
+    .area-links {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .top-bar {
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .header-inner {
+      padding: 20px 14px;
+    }
+
+    nav {
+      gap: 10px 16px;
+    }
+
+    nav a {
+      font-size: 14px;
+    }
+
+    .phone-btn {
+      width: 100%;
+      text-align: center;
+    }
+
+    .hero-copy {
+      padding: 45px 18px;
+    }
+
+    .hero-copy h1 {
+      font-size: 38px;
+      letter-spacing: -1px;
+    }
+
+    .hero-call,
+    .cta-banner a {
+      width: 100%;
+      padding: 16px 10px;
+      font-size: 28px;
+    }
+
+    .work-cards,
+    .area-links {
+      grid-template-columns: 1fr;
+    }
+
+    .faq-photo {
+      min-height: 280px;
+      border-radius: 42px;
+    }
+
+    details {
+      border-radius: 22px;
+      padding: 18px 20px;
+    }
+  }
+</style>
