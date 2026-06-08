@@ -3,6 +3,7 @@ import { areas } from "../data/areas.js";
 import { services } from "../data/services.js";
 import { areaInfo } from "../data/areaInfo.js";
 import { caseStudies } from "../data/caseStudies.js";
+import { tailKeywords } from "../data/tailKeywords.js";
 
 export async function getStaticPaths() {
   return areas.flatMap((area) =>
@@ -19,6 +20,15 @@ const phone = "1660-4350";
 const tel = "16604350";
 
 const info = areaInfo[area] || areaInfo["강남구"];
+
+const tail =
+  tailKeywords[
+    Math.abs(
+      (area + service)
+        .split("")
+        .reduce((a, c) => a + c.charCodeAt(0), 0)
+    ) % tailKeywords.length
+  ];
 const caseIndex = Math.abs((area + service).split("").reduce((sum, char) => sum + char.charCodeAt(0), 0)) % caseStudies.length;
 const selectedCase = caseStudies[caseIndex];
 
@@ -50,7 +60,7 @@ const areasGeo = {
 
 const geo = areasGeo[area] || areasGeo["강남구"];
 
-const title = `${area} ${service} 전문 상담 | 배관솔루션`;
+const title = `${area} ${service} ${tail} | 배관솔루션`;
 const description = `${area} ${service} 상담 안내. ${info.type}인 ${area} 지역 특성에 맞춰 ${info.issue}. 친절 상담 ${phone}`;
 
 const relatedAreas = areas.filter((item) => item !== area).slice(0, 8);
