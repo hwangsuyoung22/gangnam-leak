@@ -8,7 +8,7 @@ import { tailKeywords } from "../data/tailKeywords.js";
 export async function getStaticPaths() {
   return areas.flatMap((area) =>
     services.map((service) => ({
-      params: { slug: `${area}-${service}` },
+      params: { slug: `${area}-${service}-${tail}` },
       props: { area, service },
     }))
   );
