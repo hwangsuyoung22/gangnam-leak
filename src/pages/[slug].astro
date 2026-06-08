@@ -2,6 +2,7 @@
 import { areas } from "../data/areas.js";
 import { services } from "../data/services.js";
 import { areaInfo } from "../data/areaInfo.js";
+import { caseStudies } from "../data/caseStudies.js";
 
 export async function getStaticPaths() {
   return areas.flatMap((area) =>
@@ -18,6 +19,8 @@ const phone = "1660-4350";
 const tel = "16604350";
 
 const info = areaInfo[area] || areaInfo["강남구"];
+const caseIndex = Math.abs((area + service).split("").reduce((sum, char) => sum + char.charCodeAt(0), 0)) % caseStudies.length;
+const selectedCase = caseStudies[caseIndex];
 
 const areasGeo = {
   "강남구": { lat: 37.5172, lng: 127.0473 },
@@ -204,6 +207,29 @@ const schemaData = {
         </div>
       </section>
 
+<section class="case-section">
+  <div class="case-inner">
+    <p class="case-label">현장 사례</p>
+    <h2>{area} {service} 관련 {selectedCase.title}</h2>
+
+    <div class="case-grid">
+      <article>
+        <strong>증상</strong>
+        <p>{selectedCase.symptom}</p>
+      </article>
+
+      <article>
+        <strong>원인 가능성</strong>
+        <p>{selectedCase.cause}</p>
+      </article>
+
+      <article>
+        <strong>진행 방향</strong>
+        <p>{selectedCase.solution}</p>
+      </article>
+    </div>
+  </div>
+</section>
       <section class="geo-box">
         <h2>{area} 지역 기반 상담 정보</h2>
         <p>이 페이지는 서울특별시 강남구 {area} 지역 정보를 기준으로 구성되었습니다.</p>
@@ -279,6 +305,59 @@ const schemaData = {
 </html>
 
 <style>
+.case-section {
+  background: #f7f7f7;
+  padding: 85px 20px;
+}
+
+.case-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.case-label {
+  color: #0b4eb3;
+  font-weight: 900;
+  margin: 0 0 12px;
+}
+
+.case-inner h2 {
+  font-size: clamp(30px, 4vw, 44px);
+  margin: 0 0 36px;
+}
+
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.case-grid article {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 34px 28px;
+  text-align: left;
+}
+
+.case-grid strong {
+  display: block;
+  color: #0b4eb3;
+  font-size: 22px;
+  margin-bottom: 14px;
+}
+
+.case-grid p {
+  margin: 0;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+@media (max-width: 900px) {
+  .case-grid {
+    grid-template-columns: 1fr;
+  }
+}
   * { box-sizing: border-box; }
   html { word-break: keep-all; overflow-x: hidden; }
   body { margin: 0; font-family: Arial, "Noto Sans KR", sans-serif; color: #222; background: #fff; overflow-x: hidden; }
