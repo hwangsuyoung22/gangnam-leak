@@ -1,4 +1,4 @@
-const areas = [
+export const areas = [
   "강남구",
   "신사동",
   "논현1동",

@@ -1,0 +1,782 @@
+---
+import { areas } from "./data/areas.js";
+import { services } from "./data/services.js";
+
+export async function getStaticPaths() {
+  return areas.flatMap((area) =>
+    services.map((service) => ({
+      params: { slug: `${area}-${service}` },
+      props: { area, service },
+    }))
+  );
+}
+
+const { area, service } = Astro.props;
+
+const phone = "1660-4350";
+const tel = "16604350";
+
+const areasGeo = {
+  "강남구": { lat: 37.5172, lng: 127.0473 },
+  "신사동": { lat: 37.5223, lng: 127.0286 },
+  "논현1동": { lat: 37.5115, lng: 127.0285 },
+  "논현2동": { lat: 37.5174, lng: 127.0373 },
+  "압구정동": { lat: 37.5271, lng: 127.0335 },
+  "청담동": { lat: 37.525, lng: 127.0493 },
+  "삼성1동": { lat: 37.5146, lng: 127.0624 },
+  "삼성2동": { lat: 37.5112, lng: 127.0467 },
+  "대치1동": { lat: 37.4934, lng: 127.0565 },
+  "대치2동": { lat: 37.4979, lng: 127.0644 },
+  "대치4동": { lat: 37.4991, lng: 127.0575 },
+  "역삼1동": { lat: 37.5006, lng: 127.0364 },
+  "역삼2동": { lat: 37.4951, lng: 127.0466 },
+  "도곡1동": { lat: 37.4908, lng: 127.0387 },
+  "도곡2동": { lat: 37.4837, lng: 127.0463 },
+  "개포1동": { lat: 37.4816, lng: 127.0575 },
+  "개포2동": { lat: 37.4891, lng: 127.0692 },
+  "개포3동": { lat: 37.4876, lng: 127.0652 },
+  "개포4동": { lat: 37.4787, lng: 127.0516 },
+  "일원본동": { lat: 37.483, lng: 127.0841 },
+  "일원1동": { lat: 37.4915, lng: 127.0871 },
+  "수서동": { lat: 37.4889, lng: 127.1045 },
+  "세곡동": { lat: 37.4653, lng: 127.1068 },
+};
+
+const geo = areasGeo[area] || areasGeo["강남구"];
+
+const title = `${area} ${service} 전문 상담 | 배관솔루션`;
+const description = `${area} ${service} 상담 안내. 강남구 누수탐지, 배관설비, 하수구막힘 전문 배관솔루션. 친절 상담 ${phone}`;
+
+const relatedAreas = areas.filter((item) => item !== area).slice(0, 8);
+const relatedServices = services.filter((item) => item !== service).slice(0, 8);
+
+const faqs = [
+  `${area} ${service} 비용은 얼마인가요?`,
+  `${area} ${service} 당일 상담이 가능한가요?`,
+  `${service} 작업 후 A/S도 가능한가요?`,
+  `${area} 아파트나 빌라도 상담 가능한가요?`,
+];
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: `배관솔루션 ${area} ${service}`,
+  description,
+  telephone: phone,
+  priceRange: "상담 후 안내",
+  areaServed: {
+    "@type": "Place",
+    name: `서울특별시 강남구 ${area}`,
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: geo.lat,
+      longitude: geo.lng,
+    },
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: geo.lat,
+    longitude: geo.lng,
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressRegion: "서울특별시",
+    addressLocality: "강남구",
+    streetAddress: area,
+    addressCountry: "KR",
+  },
+};
+---
+
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={`https://gangnam-leak.netlify.app/${area}-${service}`} />
+    <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+  </head>
+
+  <body>
+    <div class="top-bar">강남구 {area} {service} 친절 상담</div>
+
+    <header class="header">
+      <div class="header-inner">
+        <a href="/" class="logo">배관솔루션</a>
+        <a class="phone-btn" href={`tel:${tel}`}>대표전화 {phone}</a>
+        <nav>
+          <a href="/">홈</a>
+          <a href="#service">서비스안내</a>
+          <a href="#area">주변지역</a>
+          <a href="#faq">상담문의</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-photo">
+          <div>
+            <strong>{area}</strong>
+            <span>{service} 현장 상담</span>
+          </div>
+        </div>
+
+        <div class="hero-copy">
+          <p>강남구 {area} 전문 상담</p>
+          <h1>{area}<br />{service}</h1>
+          <a href={`tel:${tel}`} class="hero-call">☎ {phone}</a>
+          <span>정확한 진단 · 필요한 공사 · 1년 A/S 보장</span>
+        </div>
+      </section>
+
+      <section class="intro" id="service">
+        <h2>{area} {service} 안내</h2>
+        <p>
+          {area} 지역에서 {service} 문제가 생기면 증상만 보고 판단하기보다 현장 상태를 먼저 확인하는 것이 중요합니다.
+          배관솔루션은 누수탐지, 배관설비, 하수구막힘 등 강남구 현장 상황에 맞춰 필요한 작업을 안내합니다.
+        </p>
+      </section>
+
+      <section class="cards">
+        <article>
+          <strong>01</strong>
+          <h3>정확한 현장 확인</h3>
+          <p>{area} {service} 증상은 배관 위치, 건물 구조, 사용 환경에 따라 원인이 달라질 수 있습니다.</p>
+        </article>
+
+        <article>
+          <strong>02</strong>
+          <h3>필요한 작업만 안내</h3>
+          <p>무리한 공사보다 원인 확인 후 필요한 범위의 보수와 설비 작업을 우선으로 안내합니다.</p>
+        </article>
+
+        <article>
+          <strong>03</strong>
+          <h3>작업 후 A/S 보장</h3>
+          <p>작업 후에도 안심하실 수 있도록 현장 기준에 맞춘 사후 확인과 A/S를 안내합니다.</p>
+        </article>
+      </section>
+
+      <section class="geo-box">
+        <h2>{area} 지역 기반 상담 정보</h2>
+        <p>
+          이 페이지는 서울특별시 강남구 {area} 지역 정보를 기준으로 구성되었습니다.
+        </p>
+        <div>
+          <span>위도 {geo.lat}</span>
+          <span>경도 {geo.lng}</span>
+        </div>
+      </section>
+
+      <section class="process">
+        <h2>{area} {service} 진행 절차</h2>
+        <div class="process-grid">
+          <div><b>1</b><span>전화 상담</span></div>
+          <div><b>2</b><span>현장 확인</span></div>
+          <div><b>3</b><span>원인 진단</span></div>
+          <div><b>4</b><span>작업 안내</span></div>
+        </div>
+      </section>
+
+      <section id="faq" class="faq-section">
+        <div class="faq-photo">
+          <strong>상담 가능</strong>
+          <span>{area} {service}</span>
+        </div>
+
+        <div class="faq-content">
+          <h2>자주 묻는 질문</h2>
+          {faqs.map((faq) => (
+            <details>
+              <summary>{faq}</summary>
+              <p>현장 구조와 증상에 따라 달라질 수 있어 전화 상담 후 정확히 안내드립니다.</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section id="area" class="link-section">
+        <h2>주변 지역 {service}</h2>
+        <div class="link-grid">
+          {relatedAreas.map((relatedArea) => (
+            <a href={`/${relatedArea}-${service}`}>{relatedArea} {service}</a>
+          ))}
+        </div>
+      </section>
+
+      <section class="link-section white">
+        <h2>{area} 다른 서비스</h2>
+        <div class="link-grid">
+          {relatedServices.map((relatedService) => (
+            <a href={`/${area}-${relatedService}`}>{area} {relatedService}</a>
+          ))}
+        </div>
+      </section>
+
+      <section class="cta-banner">
+        <p>{area} {service} 상담</p>
+        <h2>친절 상담 전화</h2>
+        <a href={`tel:${tel}`}>☎ {phone}</a>
+        <span>정확한 진단 · 필요한 공사 · 1년 A/S 보장</span>
+      </section>
+    </main>
+
+    <footer>
+      <h2>배관솔루션</h2>
+      <p>강남구 {area} {service} 전문 상담</p>
+      <a href={`tel:${tel}`}>친절 상담 {phone}</a>
+      <small>© 2026 배관솔루션 All Rights Reserved.</small>
+    </footer>
+  </body>
+</html>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    word-break: keep-all;
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    font-family: Arial, "Noto Sans KR", sans-serif;
+    color: #222;
+    background: #fff;
+    overflow-x: hidden;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .top-bar {
+    background: #063f9e;
+    color: white;
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  .header {
+    background: white;
+  }
+
+  .header-inner {
+    max-width: 1180px;
+    min-height: 110px;
+    margin: 0 auto;
+    padding: 22px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .logo {
+    color: #0b4eb3;
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 950;
+    white-space: nowrap;
+  }
+
+  .phone-btn {
+    background: #2867c9;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  nav {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  nav a {
+    color: #111;
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 700px;
+  }
+
+  .hero-photo {
+    background:
+      linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.25)),
+      linear-gradient(135deg, #d8e2ef, #f4f7fb);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-photo div,
+  .faq-photo {
+    border: 2px dashed rgba(0,0,0,.2);
+    border-radius: 26px;
+    padding: 34px;
+    text-align: center;
+  }
+
+  .hero-photo strong,
+  .faq-photo strong {
+    display: block;
+    font-size: 34px;
+    margin-bottom: 8px;
+    color: #073f9f;
+  }
+
+  .hero-copy {
+    background: #073f9f;
+    color: white;
+    padding: 60px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+    text-align: center;
+  }
+
+  .hero-copy p {
+    color: #ffd400;
+    font-size: clamp(18px, 2vw, 24px);
+    font-weight: 900;
+    margin: 0;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(44px, 5vw, 76px);
+    line-height: 1.12;
+    margin: 0;
+    font-weight: 950;
+    letter-spacing: -1.5px;
+  }
+
+  .hero-call {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    background: white;
+    color: #111;
+    padding: 18px 56px;
+    border-radius: 999px;
+    font-size: clamp(28px, 3vw, 42px);
+    font-weight: 950;
+    box-shadow: 0 8px 0 rgba(0,0,0,.16);
+    white-space: nowrap;
+  }
+
+  .hero-copy span {
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 700;
+  }
+
+  .intro {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 80px 20px 40px;
+    text-align: center;
+  }
+
+  .intro h2,
+  .process h2,
+  .link-section h2,
+  .geo-box h2 {
+    font-size: clamp(30px, 4vw, 44px);
+    margin: 0 0 22px;
+  }
+
+  .intro p {
+    font-size: 18px;
+    line-height: 1.85;
+    margin: 0;
+  }
+
+  .cards {
+    max-width: 1100px;
+    margin: 0 auto 70px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .cards article {
+    border: 1px solid #e5e5e5;
+    padding: 42px 30px;
+    text-align: center;
+    background: white;
+  }
+
+  .cards strong {
+    color: #ffd400;
+    background: #073f9f;
+    width: 74px;
+    height: 74px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 950;
+  }
+
+  .cards h3 {
+    color: #1f63c6;
+    font-size: 24px;
+    margin: 24px 0 14px;
+  }
+
+  .cards p {
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  .geo-box {
+    max-width: 980px;
+    margin: 0 auto 80px;
+    padding: 42px 24px;
+    background: #f7f7f7;
+    border: 1px solid #e1e1e1;
+    text-align: center;
+  }
+
+  .geo-box p {
+    line-height: 1.8;
+    margin: 0 0 22px;
+  }
+
+  .geo-box div {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .geo-box span {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 12px 18px;
+    font-weight: 800;
+  }
+
+  .process {
+    background: #f7f7f7;
+    text-align: center;
+    padding: 85px 20px;
+  }
+
+  .process-grid {
+    max-width: 980px;
+    margin: 35px auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .process-grid div {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 30px 18px;
+  }
+
+  .process-grid b {
+    display: block;
+    color: #2867c9;
+    font-size: 34px;
+    margin-bottom: 12px;
+  }
+
+  .process-grid span {
+    font-weight: 900;
+    font-size: 18px;
+  }
+
+  .faq-section {
+    max-width: 1120px;
+    margin: 90px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1.12fr;
+    gap: 70px;
+    align-items: center;
+  }
+
+  .faq-photo {
+    min-height: 420px;
+    background: linear-gradient(135deg, #e4eaf3, #f8f8f8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 80px;
+  }
+
+  .faq-content h2 {
+    font-size: clamp(30px, 3vw, 42px);
+    margin: 0 0 24px;
+  }
+
+  details {
+    background: #2867c9;
+    color: #fff;
+    margin-top: 15px;
+    border-radius: 999px;
+    padding: 20px 28px;
+  }
+
+  summary {
+    cursor: pointer;
+    font-weight: 900;
+    line-height: 1.45;
+  }
+
+  details p {
+    margin: 16px 0 0;
+    line-height: 1.7;
+  }
+
+  .link-section {
+    background: #f7f7f7;
+    text-align: center;
+    padding: 80px 20px;
+  }
+
+  .link-section.white {
+    background: white;
+  }
+
+  .link-grid {
+    max-width: 1050px;
+    margin: 30px auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .link-grid a {
+    background: white;
+    border: 1px solid #ddd;
+    color: #111;
+    padding: 17px 12px;
+    font-weight: 900;
+    font-size: 16px;
+  }
+
+  .white .link-grid a {
+    background: #f7f7f7;
+  }
+
+  .cta-banner {
+    background: #073f9f;
+    color: white;
+    text-align: center;
+    padding: 80px 20px;
+  }
+
+  .cta-banner p {
+    color: #ffd400;
+    font-size: 22px;
+    font-weight: 900;
+    margin: 0 0 14px;
+  }
+
+  .cta-banner h2 {
+    font-size: clamp(34px, 4vw, 48px);
+    margin: 0 0 24px;
+    font-weight: 950;
+  }
+
+  .cta-banner a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    color: #111;
+    border-radius: 999px;
+    padding: 18px 58px;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 950;
+    box-shadow: 0 8px 0 rgba(0,0,0,.18);
+    white-space: nowrap;
+  }
+
+  .cta-banner span {
+    display: block;
+    margin-top: 24px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  footer {
+    background: #2867c9;
+    color: white;
+    text-align: center;
+    padding: 70px 20px 36px;
+  }
+
+  footer h2 {
+    font-size: 34px;
+    margin: 0 0 24px;
+  }
+
+  footer p {
+    margin: 0 0 26px;
+  }
+
+  footer a {
+    color: #ffd400;
+    font-size: 24px;
+    font-weight: 950;
+  }
+
+  footer small {
+    display: block;
+    margin-top: 42px;
+    opacity: .85;
+  }
+
+  @media (max-width: 980px) {
+    .header-inner {
+      flex-direction: column;
+      min-height: auto;
+      gap: 16px;
+    }
+
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .hero-photo {
+      min-height: 320px;
+    }
+
+    .hero-copy {
+      min-height: 430px;
+    }
+
+    .cards,
+    .faq-section {
+      grid-template-columns: 1fr;
+    }
+
+    .process-grid,
+    .link-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .faq-section {
+      gap: 36px;
+      margin: 70px auto;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .top-bar {
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .header-inner {
+      padding: 20px 14px;
+    }
+
+    nav {
+      gap: 10px 16px;
+    }
+
+    nav a {
+      font-size: 14px;
+    }
+
+    .phone-btn {
+      width: 100%;
+      text-align: center;
+      padding: 14px 18px;
+      font-size: 15px;
+    }
+
+    .hero-photo {
+      min-height: 250px;
+    }
+
+    .hero-copy {
+      min-height: 410px;
+      padding: 45px 18px;
+      gap: 18px;
+    }
+
+    .hero-copy h1 {
+      font-size: 38px;
+      letter-spacing: -1px;
+    }
+
+    .hero-call,
+    .cta-banner a {
+      width: 100%;
+      padding: 16px 10px;
+      font-size: 28px;
+    }
+
+    .cards,
+    .process-grid,
+    .link-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .intro {
+      padding: 60px 18px 30px;
+    }
+
+    .intro p {
+      font-size: 16px;
+    }
+
+    .geo-box {
+      margin: 0 16px 60px;
+      padding: 34px 18px;
+    }
+
+    .geo-box span {
+      width: 100%;
+    }
+
+    .faq-photo {
+      min-height: 280px;
+      border-radius: 42px;
+    }
+
+    details {
+      border-radius: 22px;
+      padding: 18px 20px;
+    }
+
+    .cta-banner {
+      padding: 60px 18px;
+    }
+
+    .cta-banner p {
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    .cta-banner span {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+  }
+</style>
