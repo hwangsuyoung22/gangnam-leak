@@ -18,6 +18,17 @@ function getTail(area, service) {
   return tailKeywords[index];
 }
 
+function getTail(area, service) {
+  const index =
+    Math.abs(
+      (area + service)
+        .split("")
+        .reduce((sum, char) => sum + char.charCodeAt(0), 0)
+    ) % tailKeywords.length;
+
+  return tailKeywords[index];
+}
+
 function toSlug(text) {
   return text
     .trim()
