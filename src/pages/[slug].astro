@@ -2,63 +2,20 @@
 import { areas } from "../data/areas.js";
 import { services } from "../data/services.js";
 import { areaInfo } from "../data/areaInfo.js";
-import { tailKeywords } from "../data/tailKeywords.js";
-
-const phone = "1660-4350";
-const tel = "16604350";
-
-function getTail(area, service) {
-  const index =
-    Math.abs(
-      (area + service)
-        .split("")
-        .reduce((sum, char) => sum + char.charCodeAt(0), 0)
-    ) % tailKeywords.length;
-
-  return tailKeywords[index];
-}
-
-function getTail(area, service) {
-  const index =
-    Math.abs(
-      (area + service)
-        .split("")
-        .reduce((sum, char) => sum + char.charCodeAt(0), 0)
-    ) % tailKeywords.length;
-
-  return tailKeywords[index];
-}
-
-function toSlug(text) {
-  return text
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/[\/\\?%*:|"<>]/g, "-")
-    .replace(/-+/g, "-");
-}
 
 export async function getStaticPaths() {
   return areas.flatMap((area) =>
-    services.map((service) => {
-      const tail = getTail(area, service);
-      const slugTail = toSlug(tail);
-
-      return {
-        params: {
-          slug: `${area}-${service}-${slugTail}`,
-        },
-        props: {
-          area,
-          service,
-          tail,
-          slugTail,
-        },
-      };
-    })
+    services.map((service) => ({
+      params: { slug: `${area}-${service}` },
+      props: { area, service },
+    }))
   );
 }
 
-const { area, service, tail, slugTail } = Astro.props;
+const { area, service } = Astro.props;
+
+const phone = "1660-4350";
+const tel = "16604350";
 
 const info = areaInfo[area] || areaInfo["강남구"];
 
@@ -90,33 +47,11 @@ const areasGeo = {
 
 const geo = areasGeo[area] || areasGeo["강남구"];
 
-const pageSlug = `${area}-${service}-${slugTail}`;
-
-const title = `${area} ${service} ${tail} | 배관솔루션`;
-const description = `${area} ${service} ${tail} 안내. ${info.type}인 ${area} 지역 특성에 맞춰 ${info.issue}. 친절 상담 ${phone}`;
+const title = `${area} ${service} 전문 상담 | 배관솔루션`;
+const description = `${area} ${service} 상담 안내. ${info.type}인 ${area} 지역 특성에 맞춰 ${info.issue}. 친절 상담 ${phone}`;
 
 const relatedAreas = areas.filter((item) => item !== area).slice(0, 8);
 const relatedServices = services.filter((item) => item !== service).slice(0, 8);
-
-const relatedAreaLinks = relatedAreas.map((relatedArea) => {
-  const relatedTail = getTail(relatedArea, service);
-  const relatedSlugTail = toSlug(relatedTail);
-
-  return {
-    href: `/${relatedArea}-${service}-${relatedSlugTail}`,
-    text: `${relatedArea} ${service} ${relatedTail}`,
-  };
-});
-
-const relatedServiceLinks = relatedServices.map((relatedService) => {
-  const relatedTail = getTail(area, relatedService);
-  const relatedSlugTail = toSlug(relatedTail);
-
-  return {
-    href: `/${area}-${relatedService}-${relatedSlugTail}`,
-    text: `${area} ${relatedService} ${relatedTail}`,
-  };
-});
 
 const faqs = [
   `${area} ${service} 비용은 얼마인가요?`,
@@ -134,7 +69,7 @@ const faqs = [
 const schemaData = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  name: `배관솔루션 ${area} ${service} ${tail}`,
+  name: `배관솔루션 ${area} ${service}`,
   description,
   telephone: phone,
   priceRange: "상담 후 안내",
@@ -168,12 +103,12 @@ const schemaData = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={`https://gangnam-leak.netlify.app/${pageSlug}`} />
+    <link rel="canonical" href={`https://gangnam-leak.netlify.app/${area}-${service}`} />
     <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
   </head>
 
   <body>
-    <div class="top-bar">강남구 {area} {service} {tail} 친절 상담</div>
+    <div class="top-bar">강남구 {area} {service} 친절 상담</div>
 
     <header class="header">
       <div class="header-inner">
@@ -193,23 +128,23 @@ const schemaData = {
         <div class="hero-photo">
           <div>
             <strong>{area}</strong>
-            <span>{service} {tail}</span>
+            <span>{service} 현장 상담</span>
           </div>
         </div>
 
         <div class="hero-copy">
           <p>강남구 {area} 전문 상담</p>
-          <h1>{area}<br />{service}<br />{tail}</h1>
+          <h1>{area}<br />{service}</h1>
           <a href={`tel:${tel}`} class="hero-call">☎ {phone}</a>
           <span>정확한 진단 · 필요한 공사 · 1년 A/S 보장</span>
         </div>
       </section>
 
       <section class="intro" id="service">
-        <h2>{area} {service} {tail} 안내</h2>
+        <h2>{area} {service} 안내</h2>
         <p>
           {area}는 {info.type}입니다. 이 지역에서는 {info.issue}하는 편이라,
-          {service} {tail} 관련 문제가 생겼을 때 현장 구조와 배관 상태를 함께 확인하는 과정이 중요합니다.
+          {service} 문제가 생겼을 때 현장 구조와 배관 상태를 함께 확인하는 과정이 중요합니다.
         </p>
       </section>
 
@@ -235,10 +170,10 @@ const schemaData = {
 
       <section class="seo-content">
         <div class="seo-inner">
-          <h2>{area} {service} {tail} 전문 안내</h2>
+          <h2>{area} {service} 전문 안내</h2>
           <p>
-            {area} 지역에서 {service} {tail} 관련 문제가 발생하면 먼저 지역 특성과 건물 구조를 함께 보는 것이 중요합니다.
-            {area}는 {info.type}으로 분류할 수 있으며, 같은 강남구 안에서도 다른 동과는 다른 형태의 배관 문제가 나타날 수 있습니다.
+            {area} 지역에서 {service} 관련 문제가 발생하면 먼저 지역 특성과 건물 구조를 함께 보는 것이 중요합니다.
+            {area}는 {info.type}으로 분류할 수 있으며, 이 때문에 같은 강남구 안에서도 다른 동과는 다른 형태의 배관 문제가 나타날 수 있습니다.
           </p>
 
           <p>
@@ -253,9 +188,9 @@ const schemaData = {
             누수 관련 증상은 벽지 젖음, 장판 들뜸, 보일러 주변 습기, 아랫집 천장 물자국 등으로 나타날 수 있습니다.
           </p>
 
-          <h2>{service} {tail} 해결 방법</h2>
+          <h2>{service} 해결 방법</h2>
           <p>
-            {service} {tail} 문제는 현장 확인 후 원인을 구분한 뒤 작업 범위를 정하는 것이 좋습니다.
+            {service} 문제는 현장 확인 후 원인을 구분한 뒤 작업 범위를 정하는 것이 좋습니다.
             막힘 문제라면 배관 내부 이물질, 기름때, 머리카락, 슬러지, 역류 원인을 확인해야 하고,
             누수 문제라면 배관 압력, 누수 위치, 주변 마감재 상태, 아래층 피해 여부를 함께 살펴야 합니다.
           </p>
@@ -311,8 +246,8 @@ const schemaData = {
       <section id="area" class="link-section">
         <h2>주변 지역 {service}</h2>
         <div class="link-grid">
-          {relatedAreaLinks.map((item) => (
-            <a href={item.href}>{item.text}</a>
+          {relatedAreas.map((relatedArea) => (
+            <a href={`/${relatedArea}-${service}`}>{relatedArea} {service}</a>
           ))}
         </div>
       </section>
@@ -320,14 +255,14 @@ const schemaData = {
       <section class="link-section white">
         <h2>{area} 다른 서비스</h2>
         <div class="link-grid">
-          {relatedServiceLinks.map((item) => (
-            <a href={item.href}>{item.text}</a>
+          {relatedServices.map((relatedService) => (
+            <a href={`/${area}-${relatedService}`}>{area} {relatedService}</a>
           ))}
         </div>
       </section>
 
       <section class="cta-banner">
-        <p>{area} {service} {tail} 상담</p>
+        <p>{area} {service} 상담</p>
         <h2>친절 상담 전화</h2>
         <a href={`tel:${tel}`}>☎ {phone}</a>
         <span>정확한 진단 · 필요한 공사 · 1년 A/S 보장</span>
@@ -336,7 +271,7 @@ const schemaData = {
 
     <footer>
       <h2>배관솔루션</h2>
-      <p>강남구 {area} {service} {tail} 전문 상담</p>
+      <p>강남구 {area} {service} 전문 상담</p>
       <a href={`tel:${tel}`}>친절 상담 {phone}</a>
       <small>© 2026 배관솔루션 All Rights Reserved.</small>
     </footer>
@@ -361,10 +296,9 @@ const schemaData = {
   .hero-photo { background: linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.25)), linear-gradient(135deg, #d8e2ef, #f4f7fb); display: flex; align-items: center; justify-content: center; }
   .hero-photo div, .faq-photo { border: 2px dashed rgba(0,0,0,.2); border-radius: 26px; padding: 34px; text-align: center; }
   .hero-photo strong, .faq-photo strong { display: block; font-size: 34px; margin-bottom: 8px; color: #073f9f; }
-
   .hero-copy { background: #073f9f; color: white; padding: 60px 24px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 22px; text-align: center; }
   .hero-copy p { color: #ffd400; font-size: clamp(18px, 2vw, 24px); font-weight: 900; margin: 0; }
-  .hero-copy h1 { font-size: clamp(34px, 5vw, 76px); line-height: 1.12; margin: 0; font-weight: 950; letter-spacing: -1.5px; }
+  .hero-copy h1 { font-size: clamp(44px, 5vw, 76px); line-height: 1.12; margin: 0; font-weight: 950; letter-spacing: -1.5px; }
   .hero-call { display: inline-flex; justify-content: center; max-width: 100%; background: white; color: #111; padding: 18px 56px; border-radius: 999px; font-size: clamp(28px, 3vw, 42px); font-weight: 950; box-shadow: 0 8px 0 rgba(0,0,0,.16); white-space: nowrap; }
   .hero-copy span { font-size: clamp(16px, 2vw, 22px); font-weight: 700; }
 
@@ -433,7 +367,7 @@ const schemaData = {
     .phone-btn { width: 100%; text-align: center; padding: 14px 18px; font-size: 15px; }
     .hero-photo { min-height: 250px; }
     .hero-copy { min-height: 410px; padding: 45px 18px; gap: 18px; }
-    .hero-copy h1 { font-size: 32px; letter-spacing: -1px; }
+    .hero-copy h1 { font-size: 38px; letter-spacing: -1px; }
     .hero-call, .cta-banner a { width: 100%; padding: 16px 10px; font-size: 28px; }
     .cards, .process-grid, .link-grid { grid-template-columns: 1fr; }
     .intro, .seo-content { padding: 60px 18px 30px; }
